@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Korean with Madie 🌸 | Финальная полная версия</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@400;500;600&amp;family=Noto+Sans+KR:wght@400;500;700&amp;display=swap');
+        
+        :root {
+            --cream: #FFF8F5; --blush: #FBE8EA; --rose: #F2A6AE; --coral: #E07686;
+            --berry: #5C2A33; --ink: #2A1A1E; --gold: #C9A55C; --sage: #84C474;
+        }
+        
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .display-font { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+        .korean-text { font-family: 'Noto Sans KR', system_ui, sans-serif; }
+        
+        .ios-frame {
+            box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12);
+            border-radius: 48px; overflow: hidden; position: relative;
+        }
+        
+        .section-card {
+            background: white; border-radius: 24px;
+            box-shadow: 0 10px 30px -12px rgba(242, 166, 174, 0.22), 0 4px 12px -4px rgba(92, 42, 51, 0.08);
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+            padding: 20px 22px;
+        }
+        .section-card:active { 
+            transform: scale(0.985); 
+            box-shadow: 0 6px 20px -8px rgba(242, 166, 174, 0.28); 
+        }
+        .section-card:active { transform: scale(0.985); box-shadow: 0 4px 15px -8px rgba(242, 166, 174, 0.25); }
+        
+        .sakura {
+            position: absolute; font-size: 17px; animation: sakura-fall 6.5s linear infinite;
+            opacity: 0.5; pointer-events: none; z-index: 1;
+        }
+        @keyframes sakura-fall {
+            0% { transform: translateY(-15px) rotate(0deg); }
+            100% { transform: translateY(620px) rotate(340deg); }
+        }
+        
+        .nav-active { color: var(--coral); position: relative; }
+        .nav-active::after {
+            content: ''; position: absolute; bottom: -1px; left: 50%;
+            transform: translateX(-50%); width: 5px; height: 5px; background: var(--coral); border-radius: 50%;
+        }
+        
+        .lesson-dot {
+            width: 66px; height: 66px; border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 21px; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .current-lesson { animation: pulse-glow 2.1s ease-in-out infinite; }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 7px rgba(201,165,92,.18), 0 0 30px rgba(201,165,92,.45); }
+            50% { box-shadow: 0 0 0 13px rgba(201,165,92,.22), 0 0 40px rgba(201,165,92,.55); }
+        }
+        
+        .madie-quote {
+            background: #FBE8EA; border-left: 3.5px solid #E07686;
+            border-radius: 18px; padding: 13px 15px; position: relative;
+        }
+        
+        .grain {
+            position: absolute; inset: 0; pointer-events: none; z-index: 0;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27100%27 height=%27100%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.75%27 numOctaves=%273%27/%3E%3C/filter%3E%3Crect width=%27100%27 height=%27100%27 filter=%27url(%23n)%27 opacity=%270.028%27/%3E%3C/svg%27');
+        }
+        
+        .hangul-btn {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hangul-btn:active {
+            transform: scale(0.9);
+            background: #E07686 !important;
+            color: white !important;
+        }
+        
+        .flashcard {
+            transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flashcard.flipped { transform: rotateY(180deg); }
+        
+        .twk-panel {
+            position: fixed; right: 14px; bottom: 14px; z-index: 2147483646; width: 258px;
+            background: rgba(250,249,247,.85); color: #29261b; backdrop-filter: blur(22px) saturate(160%);
+            border: .5px solid rgba(255,255,255,.55); border-radius: 13px;
+            box-shadow: 0 1px 0 rgba(255,255,255,.45) inset, 0 10px 35px rgba(0,0,0,.16);
+            font: 11px/1.35 ui-sans-serif, system-ui; overflow: hidden;
+        }
+        
+        /* Intro Splash Animations */
+        @keyframes fan-open {
+            0% { transform: scale(0.2) rotate(-45deg); opacity: 0; }
+            60% { transform: scale(1.15) rotate(8deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        @keyframes flag-pop {
+            0% { transform: scale(0.3); opacity: 0; }
+            70% { transform: scale(1.3); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes logo-fade {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes sakura-twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.6); }
+        }
+        @keyframes sakura-fall {
+            0% { transform: translateY(-30px) rotate(0deg); opacity: 0.9; }
+            100% { transform: translateY(620px) rotate(380deg); opacity: 0; }
+        }
+        .sakura-fall {
+            position: absolute; top: -30px; font-size: 18px; animation: sakura-fall 3.8s linear forwards;
+            z-index: 1; pointer-events: none;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        @keyframes logo-entrance {
+            0% { opacity: 0; transform: scale(0.75) translateY(25px); }
+            55% { transform: scale(1.04) translateY(-6px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-[#FBE8EA] flex items-center justify-center min-h-screen py-5">
+    
+    <!-- BEAUTIFUL LOGO INTRO SPLASH -->
+    <div id="intro-splash" class="fixed inset-0 z-[999] bg-[#FFF8F5] flex items-center justify-center overflow-hidden">
+        <div class="relative w-full max-w-[420px] h-full flex flex-col items-center justify-center">
+            
+            <!-- Drawn Logo -->
+            <div class="relative mb-7" style="animation: logo-entrance 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;">
+                <div class="flex items-end justify-center gap-x-1">
+                    
+                    <!-- Pink Folding Fan -->
+                    <div class="relative mr-1" style="width: 92px; height: 78px;">
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[86px] h-[72px] rounded-tl-[120px] rounded-tr-[120px] border-[7px] border-[#F2A6AE]" 
+                             style="background: linear-gradient(145deg, #FBE8EA 0%, #F2A6AE 55%, #E07686 100%); box-shadow: 0 8px 25px rgba(242,166,174,0.35);"></div>
+                        
+                        <!-- Fan ribs -->
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[86px] h-[72px] rounded-tl-[120px] rounded-tr-[120px] overflow-hidden">
+                            <div class="absolute inset-0" style="background: repeating-linear-gradient(92deg, transparent, transparent 6px, rgba(255,255,255,0.45) 6px, rgba(255,255,255,0.45) 7px);"></div>
+                        </div>
+                        
+                        <!-- Fan handle -->
+                        <div class="absolute -bottom-[3px] left-1/2 -translate-x-1/2 w-[14px] h-[22px] bg-gradient-to-b from-[#C9A55C] to-[#8B6F3A] rounded-full"></div>
+                    </div>
+                    
+                    <!-- KOREAN Text with Flag -->
+                    <div class="flex items-center">
+                        <span class="text-[58px] font-black tracking-[-3.2px] text-[#5C2A33] drop-shadow">K</span>
+                        <span class="text-[58px] font-black tracking-[-3.2px] text-[#5C2A33] drop-shadow">O</span>
+                        <span class="text-[58px] font-black tracking-[-3.2px] text-[#5C2A33] drop-shadow">R</span>
+                        <span class="text-[58px] font-black tracking-[-3.2px] text-[#5C2A33] drop-shadow">E</span>
+                        <span class="text-[58px] font-black tracking-[-3.2px] text-[#5C2A33] drop-shadow">A</span>
+                        <span class="text-[58px] font-black tracking-[-3.2px] text-[#5C2A33] drop-shadow">N</span>
+                        
+                        <!-- Korean Flag in place of O -->
+                        <div class="relative -mx-1.5 -mt-1" style="width: 38px; height: 38px;">
+                            <div class="w-[38px] h-[38px] rounded-full border-[2.5px] border-[#5C2A33] overflow-hidden shadow-inner">
+                                <!-- Taeguk (Yin-Yang) -->
+                                <div class="w-full h-full relative">
+                                    <!-- Red half -->
+                                    <div class="absolute inset-0 bg-[#E07686]" style="clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 50%);"></div>
+                                    <!-- Blue half -->
+                                    <div class="absolute inset-0 bg-[#5C8AE8]" style="clip-path: polygon(0 50%, 50% 50%, 100% 100%, 0 100%);"></div>
+                                    
+                                    <!-- Small circles -->
+                                    <div class="absolute top-[6px] left-[6px] w-[10px] h-[10px] bg-[#E07686] rounded-full"></div>
+                                    <div class="absolute bottom-[6px] right-[6px] w-[10px] h-[10px] bg-[#5C8AE8] rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- KOREAN WITH MADIE -->
+                <div class="text-center -mt-1">
+                    <div class="flex items-center justify-center gap-x-[6px]">
+                        <span class="text-[#F2A6AE] text-xl">🌸</span>
+                        <span class="text-[17px] font-semibold tracking-[3.5px] text-[#5C2A33]">KOREAN WITH MADIE</span>
+                        <span class="text-[#F2A6AE] text-xl">🌸</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tagline -->
+            <div class="text-[#5C2A33]/70 text-sm tracking-[2px] font-medium mb-8" style="animation: logo-fade 1.2s ease 0.6s both;">
+                С ПЕРВОГО ШАГА К КРАСОТЕ КОРЕИ
+            </div>
+            
+            <!-- Falling Sakura Petals -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                <div class="sakura-fall" style="left: 8%; animation-delay: 0s; font-size: 17px;">🌸</div>
+                <div class="sakura-fall" style="left: 22%; animation-delay: 0.7s; font-size: 15px;">🌸</div>
+                <div class="sakura-fall" style="left: 38%; animation-delay: 1.3s; font-size: 19px;">🌸</div>
+                <div class="sakura-fall" style="left: 55%; animation-delay: 0.4s; font-size: 16px;">🌸</div>
+                <div class="sakura-fall" style="left: 71%; animation-delay: 1.0s; font-size: 18px;">🌸</div>
+                <div class="sakura-fall" style="left: 86%; animation-delay: 0.2s; font-size: 14px;">🌸</div>
+                <div class="sakura-fall" style="left: 15%; animation-delay: 1.8s; font-size: 13px;">🌸</div>
+                <div class="sakura-fall" style="left: 64%; animation-delay: 1.5s; font-size: 17px;">🌸</div>
+            </div>
+            
+            <!-- Tap to continue -->
+            <div onclick="startAppFromIntro()" 
+                 class="absolute bottom-9 text-xs text-[#5C2A33]/60 tracking-[1.8px] cursor-pointer font-medium" 
+                 style="animation: pulse-subtle 2.2s ease infinite;">
+                TAP TO BEGIN • НАЖМИТЕ, ЧТОБЫ НАЧАТЬ
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- iOS Frame -->
+    <div class="ios-frame w-full max-w-[420px] bg-[#F2F2F7]" style="height: 874px; box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12);">
+        
+        <!-- Dynamic Island -->
+        <div class="absolute top-[11px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-black rounded-[24px] z-50"></div>
+        
+        <!-- Status Bar -->
+        <div class="h-11 flex items-center justify-between px-6 text-black text-xs relative z-10" style="padding-top: 23px;">
+            <div class="font-semibold">09:41</div>
+            <div class="flex items-center gap-x-1.5">
+                <i class="fa-solid fa-signal text-[10px]"></i>
+                <i class="fa-solid fa-wifi text-[10px]"></i>
+                <div class="flex items-center gap-x-0.5"><span class="text-[10px]">92</span><i class="fa-solid fa-battery-full"></i></div>
+            </div>
+        </div>
+
+        <!-- App Content -->
+        <div class="relative h-[calc(100%-44px)] overflow-hidden" id="app-root">
+            
+            <!-- HOME -->
+            <div id="screen-home" class="screen h-full overflow-y-auto pb-16" style="background: #FFF8F5;">
+                <!-- Top Bar -->
+                <div class="sticky top-0 z-30 px-5 pt-3 pb-2 flex items-center justify-between bg-white/95 backdrop-blur border-b border-[#F2A6AE]/30">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#F2A6AE] to-[#E07686] flex items-center justify-center shadow-inner ring-1 ring-[#C9A55C]/40">
+                            <span class="text-white text-[21px]">🌸</span>
+                        </div>
+                        <div class="leading-none">
+                            <div class="text-[#5C2A33] font-semibold text-[17px] tracking-[-0.3px]">Korean with Madie</div>
+                            <div class="text-[#5C2A33]/55 text-[9.5px] -mt-px">с первого шага</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-x-[7px]">
+                        <div class="flex items-center bg-white rounded-3xl px-3 py-[5px] shadow-sm border border-[#F2A6AE]/40 text-sm">
+                            <span class="text-[#E07686] mr-1.5">🔥</span>
+                            <span class="font-bold text-[#5C2A33]" id="streak-value">23</span>
+                        </div>
+                        <div class="flex items-center bg-white rounded-3xl px-3 py-[5px] shadow-sm border border-[#F2A6AE]/40 text-sm">
+                            <span class="text-[#C9A55C] mr-1.5">✨</span>
+                            <span class="font-bold text-[#5C2A33]" id="xp-value">1240</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Greeting -->
+                <div class="px-5 pt-4 pb-3">
+                    <div class="flex items-end">
+                        <div class="flex-1">
+                            <div class="text-[54px] leading-[0.92] text-[#5C2A33] display-font tracking-[-1.5px]">안녕!</div>
+                            <div class="text-[#E07686] text-[21px] font-medium tracking-tight mt-[-4px]">Привет, <span id="user-name">Мадинa</span> 🌸</div>
+                        </div>
+                        <div class="w-16 h-16 -mb-1">
+                            <div class="w-16 h-16 bg-gradient-to-br from-[#FBE8EA] to-white rounded-full flex items-center justify-center shadow-inner relative">
+                                <div class="text-[52px]">👧🏻</div>
+                                <div class="absolute -top-0.5 -right-0.5 w-5 h-5 bg-[#F2A6AE] rounded-full flex items-center justify-center"><span class="text-white text-[10px]">🌸</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-[#5C2A33]/55 text-xs mt-1 tracking-[0.2px]">Понедельник, 4 мая</div>
+                </div>
+
+                <!-- Cultural Banner -->
+                <div class="px-5 pb-4">
+                    <div onclick="showCalendar()" class="section-card relative overflow-hidden cursor-pointer" style="background: linear-gradient(115deg, #C9A55C 0%, #E07686 72%, #F2A6AE 100%); color: #FFF8F5;">
+                        <div class="grain"></div>
+                        <div class="p-[15px] flex items-center gap-4">
+                            <div class="w-12 h-12 flex-shrink-0 rounded-2xl bg-white/25 flex items-center justify-center text-3xl backdrop-blur">🎏</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="uppercase text-[10px] tracking-[1.6px] font-semibold opacity-85">🌸 сегодня в корее</div>
+                                <div class="font-semibold text-[17px] leading-[1.15] mt-px">어린이날 — День детей</div>
+                                <div class="text-xs opacity-90 mt-0.5 pr-6">Национальный праздник · узнать как празднуют →</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Lesson -->
+                <div class="px-5 pb-5">
+                    <div onclick="startLessonFlow()" class="section-card relative overflow-hidden cursor-pointer">
+                        <div class="p-5" style="background: linear-gradient(158deg, #FBE8EA 0%, #F2A6AE 52%, #E07686 100%);">
+                            <div class="grain"></div>
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="uppercase text-[#5C2A33] text-[10px] tracking-[1.8px] font-semibold opacity-70">УРОК 5 · СЕГОДНЯ</div>
+                                    <div class="text-[#5C2A33] text-[26px] font-semibold display-font leading-[1.05] mt-1">Конструктор<br>слогов</div>
+                                    <div class="mt-2 text-[13px] text-[#5C2A33]/80">Учимся складывать <span class="korean-text font-medium">ㄱ + ㅏ = 가</span></div>
+                                </div>
+                                <div class="text-right -mr-1">
+                                    <div class="inline-flex w-14 h-14 bg-white/75 backdrop-blur-xl rounded-2xl items-center justify-center shadow"><span class="text-4xl">🧩</span></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <div class="flex justify-between text-xs mb-1.5 px-0.5">
+                                    <span class="font-medium text-[#5C2A33]">День 5 из 30</span>
+                                    <span class="text-[#5C2A33]/55">17%</span>
+                                </div>
+                                <div class="flex gap-x-[3px]">
+                                    <div class="flex-1 h-[3.5px] rounded-full bg-[#5C2A33]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#5C2A33]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#5C2A33]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#5C2A33]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#5C2A33]"></div><div class="flex-1 h-[3.5px] rounded-full bg-white ring-1 ring-offset-1 ring-offset-[#FBE8EA] ring-[#C9A55C]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div><div class="flex-1 h-[3.5px] rounded-full bg-[#FBE8EA]"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-5 flex justify-end">
+                                <div class="inline-flex items-center gap-x-2 bg-[#5C2A33] text-white text-sm font-semibold px-6 py-[10px] rounded-2xl active:scale-[0.96]">
+                                    Начать урок <i class="fa-solid fa-arrow-right text-xs ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed -->
+                <div class="px-5 pb-2">
+                    <div class="flex items-center justify-between mb-3 px-1">
+                        <div class="flex items-center gap-x-2">
+                            <div class="w-3.5 h-px bg-[#F2A6AE]"></div>
+                            <span class="text-[#5C2A33] font-semibold text-[17px]">Лента</span>
+                        </div>
+                        <span class="text-[#E07686] text-xs font-medium">всё новое от Мади</span>
+                    </div>
+                    
+                    <div class="space-y-3.5">
+                        
+                        <!-- Voice Note (как на скрине) -->
+                        <div class="section-card p-4 text-white" style="background: linear-gradient(155deg, #5C2A33 0%, #8E3F4D 58%, #E07686 130%)">
+                            <div class="flex justify-between items-center mb-3">
+                                <div class="flex items-center gap-x-2">
+                                    <div class="px-2.5 py-px bg-white/20 rounded text-xs font-semibold flex items-center gap-x-1">
+                                        <i class="fa-solid fa-play text-[9px]"></i> VOICE NOTE · 3:12
+                                    </div>
+                                </div>
+                                <span class="text-xs opacity-80">5 мин назад</span>
+                            </div>
+                            
+                            <div class="flex gap-4 items-start">
+                                <div class="w-10 h-10 rounded-full flex-shrink-0 overflow-hidden ring-2 ring-[#C9A55C]">
+                                    <img src="https://picsum.photos/id/1009/80/80" alt="Мади" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-semibold text-[15px]">Сегодня про слово 화이팅</div>
+                                    <div class="text-xs opacity-80 mt-0.5">3 минуты, расскажу почему корейцы говорят это вместо «удачи»</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Waveform -->
+                            <div class="mt-4 mb-3 px-1 flex items-center gap-x-[2px]">
+                                <div class="flex-1 bg-white rounded-full" style="height: 10px; opacity: 0.6"></div><div class="flex-1 bg-white rounded-full" style="height: 14px; opacity: 0.8"></div><div class="flex-1 bg-white rounded-full" style="height: 8px; opacity: 0.5"></div><div class="flex-1 bg-white rounded-full" style="height: 17px; opacity: 0.9"></div><div class="flex-1 bg-white rounded-full" style="height: 6px; opacity: 0.4"></div><div class="flex-1 bg-white rounded-full" style="height: 13px; opacity: 0.75"></div><div class="flex-1 bg-white rounded-full" style="height: 11px; opacity: 0.65"></div><div class="flex-1 bg-white rounded-full" style="height: 15px; opacity: 0.85"></div><div class="flex-1 bg-white rounded-full" style="height: 7px; opacity: 0.45"></div><div class="flex-1 bg-white rounded-full" style="height: 12px; opacity: 0.7"></div><div class="flex-1 bg-white rounded-full" style="height: 9px; opacity: 0.55"></div><div class="flex-1 bg-white rounded-full" style="height: 16px; opacity: 0.88"></div><div class="flex-1 bg-white rounded-full" style="height: 5px; opacity: 0.35"></div><div class="flex-1 bg-white rounded-full" style="height: 14px; opacity: 0.8"></div><div class="flex-1 bg-white rounded-full" style="height: 10px; opacity: 0.6"></div><div class="flex-1 bg-white rounded-full" style="height: 13px; opacity: 0.75"></div><div class="flex-1 bg-white rounded-full" style="height: 8px; opacity: 0.5"></div><div class="flex-1 bg-white rounded-full" style="height: 15px; opacity: 0.85"></div><div class="flex-1 bg-white rounded-full" style="height: 6px; opacity: 0.4"></div><div class="flex-1 bg-white rounded-full" style="height: 11px; opacity: 0.65"></div><div class="flex-1 bg-white rounded-full" style="height: 17px; opacity: 0.9"></div><div class="flex-1 bg-white rounded-full" style="height: 7px; opacity: 0.45"></div><div class="flex-1 bg-white rounded-full" style="height: 12px; opacity: 0.7"></div><div class="flex-1 bg-white rounded-full" style="height: 9px; opacity: 0.55"></div><div class="flex-1 bg-white rounded-full" style="height: 14px; opacity: 0.8"></div><div class="flex-1 bg-white rounded-full" style="height: 10px; opacity: 0.6"></div><div class="flex-1 bg-white rounded-full" style="height: 8px; opacity: 0.5"></div><div class="flex-1 bg-white rounded-full" style="height: 13px; opacity: 0.75"></div>
+                            </div>
+                            
+                            <button onclick="playMadieVoice(this)" class="w-full bg-white text-[#5C2A33] py-[10px] rounded-2xl font-bold text-sm flex items-center justify-center gap-x-2 active:scale-[0.97]">
+                                <i class="fa-solid fa-play ml-0.5"></i> Слушать
+                            </button>
+                        </div>
+
+                        <!-- Слово недели -->
+                        <div class="section-card p-4 flex gap-4 items-center" style="background: linear-gradient(145deg, #FFF8F5 0%, #FBE8EA 100%)">
+                            <div class="w-16 h-16 bg-white border border-[#C9A55C]/40 rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <span class="korean-text text-[42px] font-bold text-[#5C2A33]">봄</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-x-2 mb-1">
+                                    <span class="px-2.5 py-px bg-[#C9A55C]/20 text-[#7B5A1F] rounded-full text-[9px] font-semibold">СЛОВО НЕДЕЛИ</span>
+                                </div>
+                                <div class="font-semibold text-[#5C2A33]">Весна</div>
+                                <div class="text-xs text-[#5C2A33]/70">[pom] — самое поэтичное слово сезона</div>
+                            </div>
+                            <button onclick="playAudioDemo(this)" class="w-9 h-9 bg-white border border-[#C9A55C]/40 rounded-full flex items-center justify-center text-[#C9A55C]">
+                                <i class="fa-solid fa-play text-sm"></i>
+                            </button>
+                        </div>
+
+                        <!-- Культура -->
+                        <div class="section-card p-4" style="background: linear-gradient(148deg, #FBE8EA 0%, #F2A6AE 100%)">
+                            <div class="flex items-center gap-x-2 mb-2">
+                                <span class="px-2.5 py-px bg-[#C9A55C] text-[#5C2A33] rounded-full text-[9px] font-semibold">🎎 КУЛЬТУРА</span>
+                            </div>
+                            <div class="font-semibold text-[#5C2A33] text-[17px]">Что такое 정 (jeong)?</div>
+                            <div class="text-xs text-[#5C2A33]/80 mt-2 leading-relaxed">Слово, которое нельзя перевести одним русским. Это глубокая привязанность, тёплая нить между людьми, которая растёт со временем — между подругами, между бабушкой и внучкой...</div>
+                            
+                            <div class="flex items-center justify-between mt-4 pt-3 border-t border-[#5C2A33]/15">
+                                <div class="flex items-center gap-x-2">
+                                    <div class="w-6 h-6 bg-white rounded-full flex items-center justify-center ring-1 ring-[#C9A55C]">
+                                        <span class="text-[#5C2A33] text-xs">🌸</span>
+                                    </div>
+                                    <span class="text-xs font-medium text-[#5C2A33]">От Мади</span>
+                                </div>
+                                <span onclick="showCultureDetail()" class="text-xs text-[#5C2A33] font-semibold flex items-center gap-x-1 cursor-pointer">Читать дальше →</span>
+                            </div>
+                        </div>
+
+                        <!-- Новости с картинкой -->
+                        <div class="section-card p-4 border border-[#F2A6AE]/50">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="px-3 py-px bg-[#FBE8EA] text-[#5C2A33] rounded-full text-[10px] font-semibold">📰 НОВОСТИ</span>
+                                <span class="text-[#5C2A33]/55 text-xs">Сегодня · 09:30</span>
+                            </div>
+                            
+                            <div class="h-32 rounded-2xl mb-3 relative overflow-hidden">
+                                <img src="https://picsum.photos/id/1016/600/300" alt="Сакура в Сеуле" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/30"></div>
+                                <div class="absolute top-2 right-2 px-2 py-px bg-white/90 text-[#5C2A33] text-[9px] rounded-full font-semibold">Сеул • 2026</div>
+                            </div>
+                            
+                            <div class="korean-text text-[17px] font-semibold text-[#5C2A33] leading-tight">서울에 벚꽃이 피기 시작했어요</div>
+                            <div class="text-[#E07686] italic text-[14.5px] mt-0.5">В Сеуле начала цвести сакура</div>
+                            <div class="text-xs text-[#5C2A33]/75 mt-2">Парк Йоидо закрыли для машин — местные приходят с пледами и термосами с кофе. Похоже на наш парк Горького, только розовее.</div>
+                            
+                            <div class="flex gap-2 mt-4">
+                                <button onclick="playAudioDemo(this)" class="flex-1 bg-[#F2A6AE] active:bg-[#E07686] text-[#5C2A33] py-2.5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-x-2">
+                                    <i class="fa-solid fa-headphones"></i> <span>Послушать</span> <span class="opacity-60 text-xs">(0:42)</span>
+                                </button>
+                                <div class="flex border border-[#F2A6AE]/60 rounded-2xl overflow-hidden text-xs">
+                                    <div class="px-3 py-2.5 bg-[#5C2A33] text-white cursor-pointer">🇰🇷</div>
+                                    <div class="px-3 py-2.5 cursor-pointer">🇷🇺</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- K-DRAMA -->
+                        <div class="section-card p-4 border border-[#5C2A33]/20">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="px-3 py-px bg-[#5C2A33] text-white rounded-full text-[10px] font-semibold">🎬 K-DRAMA</span>
+                                <span class="text-xs text-[#5C2A33]/60">Crash Landing on You</span>
+                            </div>
+                            
+                            <div class="h-28 rounded-2xl mb-3 relative overflow-hidden">
+                                <img src="https://picsum.photos/id/1005/600/300" alt="K-Drama" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60 flex items-center justify-center">
+                                    <div class="w-12 h-12 bg-[#C9A55C] rounded-full flex items-center justify-center shadow-lg">
+                                        <i class="fa-solid fa-play text-[#2A1A1E] text-xl ml-0.5"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-2 left-2 px-2 py-px bg-white/90 text-[#5C2A33] text-[9px] rounded-full font-semibold">Crash Landing on You</div>
+                            </div>
+                            
+                            <div class="korean-text text-[16px] font-semibold text-[#5C2A33]">«진짜 괜찮아?»</div>
+                            <div class="text-[#E07686] italic text-[14px]">«Ты правда в порядке?»</div>
+                            <div class="text-xs text-[#5C2A33]/75 mt-2">Слово 진짜 — самое частое в k-drama. Разбираю, как меняется смысл от интонации, в карусели →</div>
+                            
+                            <div class="flex gap-1 mt-3">
+                                <div class="w-2 h-2 rounded-full bg-[#5C2A33]"></div>
+                                <div class="w-2 h-2 rounded-full bg-[#5C2A33]/30"></div>
+                                <div class="w-2 h-2 rounded-full bg-[#5C2A33]/30"></div>
+                            </div>
+                        </div>
+
+                        <!-- K-POP -->
+                        <div class="section-card p-4 text-white" style="background: linear-gradient(155deg, #2A1A1E 0%, #5C2A33 70%, #C9A55C 160%)">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="px-3 py-px bg-[#C9A55C] text-[#2A1A1E] rounded-full text-[10px] font-semibold">🎵 K-POP</span>
+                                <span class="text-xs opacity-80">IU</span>
+                            </div>
+                            
+                            <div class="korean-text text-[17px] font-semibold">«이 밤 그날의 반딧불을»</div>
+                            <div class="text-[#FBE8EA] italic text-[14px] mt-0.5">«В эту ночь — светлячков того дня»</div>
+                            
+                            <div class="mt-3 bg-white/10 rounded-2xl p-3 text-xs">
+                                <div class="text-[#C9A55C] font-semibold tracking-widest text-[9px]">ГРАММАТИКА</div>
+                                <div class="mt-1 opacity-90">«그날의» — родительный падеж от 그날 (тот день). Окончание -의 показывает принадлежность, как русский «-ского/-ской»: светлячки чего? — того дня.</div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mt-3">
+                                <div class="flex items-center gap-x-2">
+                                    <div class="w-9 h-9 rounded-xl overflow-hidden ring-1 ring-white/30">
+                                        <img src="https://picsum.photos/id/1012/80/80" alt="IU" class="w-full h-full object-cover">
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold">Through the Night</div>
+                                        <div class="text-xs opacity-70">Palette · 2017 • IU</div>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-arrow-right opacity-60"></i>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- LESSONS -->
+            <div id="screen-lessons" class="screen hidden h-full overflow-y-auto pb-16 bg-[#FFF8F5]">
+                <div class="sticky top-0 z-30 px-6 pt-5 pb-4 bg-white/95 backdrop-blur border-b border-[#F2A6AE]/30">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-[26px] font-semibold text-[#5C2A33]">Мой путь</div>
+                            <div class="text-xs text-[#5C2A33]/60">5 из 30 уроков пройдено · ещё 25 впереди</div>
+                        </div>
+                        <div class="px-4 py-1.5 bg-gradient-to-r from-[#F2A6AE] to-[#C9A55C] text-white text-xs font-bold rounded-2xl">🌸 17%</div>
+                    </div>
+                </div>
+
+                <div class="px-5 pt-4">
+                    <div class="mb-5"><div class="h-1 bg-[#F2A6AE]/30 rounded"><div class="h-1 w-[17%] bg-gradient-to-r from-[#E07686] to-[#C9A55C] rounded"></div></div></div>
+
+                    <div class="flex items-center justify-between mb-4 px-1">
+                        <div class="flex items-center gap-x-3">
+                            <span class="text-2xl">🌸</span>
+                            <div>
+                                <div class="font-semibold text-[#5C2A33]">Модуль 1 · Хангыль</div>
+                                <div class="text-[10px] text-[#5C2A33]/60">10 уроков · основа основ</div>
+                            </div>
+                        </div>
+                        <div class="text-xs px-3 py-1 bg-[#84C474]/15 text-[#84C474] rounded-2xl font-bold">✓ 5/10</div>
+                    </div>
+
+                    <!-- Zigzag Path -->
+                    <div class="relative mx-auto mb-6" style="width: 316px; height: 580px;">
+                        <svg class="absolute inset-0" width="316" height="580" style="z-index:1; pointer-events:none;">
+                            <path d="M 40 32 Q 132 78 172 128" fill="none" stroke="#F2A6AE" stroke-width="2.1" stroke-dasharray="3.5 5.5"/>
+                            <path d="M 172 128 Q 232 178 192 232" fill="none" stroke="#F2A6AE" stroke-width="2.1" stroke-dasharray="3.5 5.5"/>
+                            <path d="M 192 232 Q 122 290 76 332" fill="none" stroke="#F2A6AE" stroke-width="2.1" stroke-dasharray="3.5 5.5"/>
+                            <path d="M 76 332 Q 152 388 216 432" fill="none" stroke="#F2A6AE" stroke-width="2.1" stroke-dasharray="3.5 5.5"/>
+                            <path d="M 216 432 Q 136 488 88 532" fill="none" stroke="#F2A6AE" stroke-width="2.1" stroke-dasharray="3.5 5.5"/>
+                        </svg>
+
+                        <div class="absolute cursor-pointer" style="left: 18px; top: 8px;" onclick="startLessonFlow()"><div class="lesson-dot bg-gradient-to-br from-[#F2A6AE] to-[#E07686] text-white shadow-lg ring-1 ring-[#C9A55C]/30"><i class="fa-solid fa-check text-xl"></i></div><div class="text-center mt-1 w-[66px]"><div class="text-xs font-medium">Знакомство</div><div class="text-[9px] text-[#84C474] -mt-px">✓ Пройдено</div></div></div>
+                        <div class="absolute cursor-pointer" style="left: 112px; top: 62px;"><div class="lesson-dot bg-gradient-to-br from-[#F2A6AE] to-[#E07686] text-white shadow-lg ring-1 ring-[#C9A55C]/30"><i class="fa-solid fa-check text-xl"></i></div><div class="text-center mt-1 w-[66px]"><div class="text-xs font-medium">Гласные</div><div class="text-[9px] text-[#84C474] -mt-px">✓ Пройдено</div></div></div>
+                        <div class="absolute cursor-pointer" style="left: 168px; top: 118px;"><div class="lesson-dot bg-gradient-to-br from-[#F2A6AE] to-[#E07686] text-white shadow-lg ring-1 ring-[#C9A55C]/30"><i class="fa-solid fa-check text-xl"></i></div><div class="text-center mt-1 w-[66px]"><div class="text-xs font-medium">Йотированные</div><div class="text-[9px] text-[#84C474] -mt-px">✓ Пройдено</div></div></div>
+                        <div class="absolute cursor-pointer" style="left: 92px; top: 195px;"><div class="lesson-dot bg-gradient-to-br from-[#F2A6AE] to-[#E07686] text-white shadow-lg ring-1 ring-[#C9A55C]/30"><i class="fa-solid fa-check text-xl"></i></div><div class="text-center mt-1 w-[66px]"><div class="text-xs font-medium">Согласные I</div><div class="text-[9px] text-[#84C474] -mt-px">✓ Пройдено</div></div></div>
+                        
+                        <div class="absolute cursor-pointer current-lesson" style="left: 162px; top: 272px;" onclick="startLessonFlow()"><div class="lesson-dot bg-gradient-to-br from-[#E07686] to-[#C9A55C] text-white ring-4 ring-[#C9A55C]/40 shadow-2xl"><span class="text-[25px] font-bold">5</span></div><div class="text-center mt-1.5 -ml-3 w-[76px]"><div class="text-xs font-bold text-[#5C2A33]">Конструктор слогов</div><div class="mt-1"><span class="inline-block text-[10px] bg-[#5C2A33] text-white px-3 py-px rounded-xl">Продолжить →</span></div></div></div>
+                        
+                        <div class="absolute cursor-not-allowed" style="left: 52px; top: 358px; opacity: .52;"><div class="lesson-dot bg-[#FBE8EA] border border-[#F2A6AE]/50 text-[#5C2A33]/40"><i class="fa-solid fa-lock text-lg"></i></div><div class="text-center mt-1 w-[66px]"><div class="text-xs text-[#5C2A33]/55">Согласные II</div></div></div>
+                        <div class="absolute cursor-not-allowed" style="left: 142px; top: 422px; opacity: .52;"><div class="lesson-dot bg-[#FBE8EA] border border-[#F2A6AE]/50 text-[#5C2A33]/40"><i class="fa-solid fa-lock text-lg"></i></div><div class="text-center mt-1 w-[66px]"><div class="text-xs text-[#5C2A33]/55">Двойные согласные</div></div></div>
+                    </div>
+
+                    <div class="space-y-3 px-1 opacity-75">
+                        <div class="flex items-center justify-between bg-white border border-dashed border-[#F2A6AE]/60 rounded-2xl p-4"><div class="flex items-center gap-x-3"><span class="text-xl">🌸</span><div><div class="font-medium text-sm">Модуль 2 · Первые слова</div><div class="text-[10px] text-[#5C2A33]/55">10 уроков · откроется после Модуля 1</div></div></div><i class="fa-solid fa-lock text-[#5C2A33]/40"></i></div>
+                        <div class="flex items-center justify-between bg-white border border-dashed border-[#F2A6AE]/60 rounded-2xl p-4"><div class="flex items-center gap-x-3"><span class="text-xl">🌸</span><div><div class="font-medium text-sm">Модуль 3 · Простые предложения</div><div class="text-[10px] text-[#5C2A33]/55">10 уроков · откроется после Модуля 2</div></div></div><i class="fa-solid fa-lock text-[#5C2A33]/40"></i></div>
+                    </div>
+
+                    <div class="text-center mt-7 mb-4 text-xs italic text-[#5C2A33]/50">«천 리 길도 한 걸음부터»<br><span class="text-[10px]">Дорога в тысячу ли начинается с одного шага</span></div>
+                </div>
+            </div>
+
+            <!-- HANGUL LAB -->
+            <div id="screen-hangul" class="screen hidden h-full overflow-y-auto pb-16 bg-[#FFF8F5]">
+                <div class="sticky top-0 z-30 px-6 pt-5 pb-4 bg-white/95 backdrop-blur border-b border-[#F2A6AE]/30">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-[26px] font-semibold text-[#5C2A33]">한글 Lab</div>
+                            <div class="text-xs text-[#5C2A33]/60">Конструктор слогов • тапни и создай</div>
+                        </div>
+                        <div class="px-3 py-1 bg-[#E07686] text-white text-xs font-bold rounded-2xl">ㄱ + ㅏ = 가</div>
+                    </div>
+                </div>
+
+                <div class="px-6 pt-6">
+                    <!-- Result -->
+                    <div class="section-card p-6 mb-6 text-center relative overflow-hidden">
+                        <div class="grain"></div>
+                        <div id="hangul-result" class="korean-text text-[92px] font-bold text-[#5C2A33] leading-none mb-1">가</div>
+                        <div id="hangul-translit" class="text-[#E07686] text-xl tracking-[4px]">[ ga ]</div>
+                        
+                        <button onclick="speakCurrentSyllable()" class="mt-4 mx-auto flex items-center gap-x-2 px-6 py-2.5 bg-[#FBE8EA] text-[#5C2A33] rounded-3xl text-sm font-semibold active:bg-[#F2A6AE]">
+                            <i class="fa-solid fa-volume-up"></i> <span>Произнести</span>
+                        </button>
+                    </div>
+
+                    <!-- Equation -->
+                    <div class="flex items-center justify-center gap-x-3 mb-6">
+                        <div id="cons-display" class="w-14 h-14 bg-[#E07686] text-white flex items-center justify-center text-4xl font-bold rounded-2xl shadow">ㄱ</div>
+                        <div class="text-3xl text-[#F2A6AE]">+</div>
+                        <div id="vowel-display" class="w-14 h-14 bg-[#F2A6AE] text-white flex items-center justify-center text-4xl font-bold rounded-2xl shadow">ㅏ</div>
+                        <div class="text-3xl text-[#F2A6AE]">=</div>
+                        <div id="result-display" class="w-14 h-14 bg-[#5C2A33] text-white flex items-center justify-center text-4xl font-bold rounded-2xl shadow">가</div>
+                    </div>
+
+                    <!-- Consonants -->
+                    <div class="mb-5">
+                        <div class="uppercase text-[#E07686] text-xs tracking-[1.5px] mb-2 px-1">자음 • СОГЛАСНЫЕ</div>
+                        <div class="grid grid-cols-5 gap-2" id="consonants-grid"></div>
+                    </div>
+
+                    <!-- Vowels -->
+                    <div>
+                        <div class="uppercase text-[#E07686] text-xs tracking-[1.5px] mb-2 px-1">모음 • ГЛАСНЫЕ</div>
+                        <div class="grid grid-cols-5 gap-2" id="vowels-grid"></div>
+                    </div>
+
+                    <div class="flex gap-3 mt-7">
+                        <button onclick="resetHangul()" class="flex-1 py-4 border border-[#F2A6AE] text-[#5C2A33] rounded-2xl text-sm font-semibold active:bg-[#FBE8EA]">Очистить</button>
+                        <button onclick="saveToFlashcards()" class="flex-1 py-3.5 bg-[#5C2A33] text-white rounded-2xl text-sm font-semibold active:bg-[#2A1A1E]">Сохранить в карточки</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAMES + FLASHCARDS -->
+            <div id="screen-games" class="screen hidden h-full overflow-y-auto pb-16 px-5 pt-5 bg-[#FFF8F5]">
+                <div class="text-2xl font-semibold mb-5">Игры и практика 🌸</div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Flashcards -->
+                    <div onclick="startFlashcards()" class="section-card p-4 cursor-pointer active:scale-[0.97]">
+                        <div class="text-4xl mb-3">📚</div>
+                        <div class="font-semibold">Карточки слов</div>
+                        <div class="text-xs text-[#5C2A33]/60">Spaced Repetition • 12 сегодня</div>
+                        <div class="text-[#E07686] text-xs mt-1">+18 XP за сессию</div>
+                    </div>
+                    
+                    <div onclick="startMatchGame()" class="section-card p-4 cursor-pointer active:scale-[0.97]">
+                        <div class="text-4xl mb-3">🖼️</div>
+                        <div class="font-semibold">Подбери картинку</div>
+                        <div class="text-xs text-[#5C2A33]/60">Match • Лёгкая</div>
+                        <div class="text-[#84C474] text-xs mt-1">+30 XP</div>
+                    </div>
+                    
+                    <div onclick="startBuildGame()" class="section-card p-4 cursor-pointer active:scale-[0.97]">
+                        <div class="text-4xl mb-3">🧩</div>
+                        <div class="font-semibold">Собери слово</div>
+                        <div class="text-xs text-[#5C2A33]/60">Build • Средняя</div>
+                        <div class="text-[#E07686] text-xs mt-1">+45 XP</div>
+                    </div>
+                    
+                    <div onclick="startListenGame()" class="section-card p-4 cursor-pointer active:scale-[0.97]">
+                        <div class="text-4xl mb-3">🎧</div>
+                        <div class="font-semibold">На слух</div>
+                        <div class="text-xs text-[#5C2A33]/60">Listen • Скорость</div>
+                        <div class="text-[#C9A55C] text-xs mt-1">+50 XP</div>
+                    </div>
+                    
+                    <div onclick="startKpopGame()" class="section-card p-4 cursor-pointer active:scale-[0.97]">
+                        <div class="text-4xl mb-3">🎵</div>
+                        <div class="font-semibold">K-pop Fill</div>
+                        <div class="text-xs text-[#5C2A33]/60">BLACKPINK • Хук</div>
+                        <div class="text-[#F2A6AE] text-xs mt-1">+60 XP</div>
+                    </div>
+                </div>
+                
+                <div class="text-center text-xs text-[#5C2A33]/50 mt-8">Чем больше правильных подряд — тем больше XP и стрик! 🔥</div>
+            </div>
+
+            <!-- PROFILE -->
+            <div id="screen-profile" class="screen hidden h-full overflow-y-auto pb-16 px-5 pt-5 bg-[#FFF8F5]">
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 mx-auto rounded-full overflow-hidden border-4 border-[#F2A6AE]">
+                        <img src="https://picsum.photos/id/1011/300/300" class="w-full h-full object-cover" alt="">
+                    </div>
+                    <div class="mt-4">
+                        <div class="text-2xl font-semibold text-[#5C2A33]" id="profile-name">Мадинa Ким</div>
+                        <div class="inline-flex items-center gap-x-1.5 mt-1 px-3 py-px bg-[#FBE8EA] text-[#5C2A33] rounded-2xl text-xs"><span>🌸</span> <span class="font-medium">Подмастерье</span></div>
+                    </div>
+                </div>
+
+                <div id="login-section" class="section-card p-6 mb-6">
+                    <div class="text-sm font-semibold mb-3 text-[#5C2A33]">Войти в аккаунт</div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="text-xs text-[#5C2A33]/60 mb-1">Имя пользователя или email</div>
+                            <input id="login-username" type="text" value="madina" class="w-full border border-[#F2A6AE]/60 rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#E07686]">
+                        </div>
+                        <div>
+                            <div class="text-xs text-[#5C2A33]/60 mb-1">Пароль</div>
+                            <div class="relative">
+                                <input id="login-password" type="password" value="demo123" class="w-full border border-[#F2A6AE]/60 rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#E07686]">
+                                <button onclick="togglePassword(this)" class="absolute right-4 top-3 text-[#5C2A33]/50"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <button onclick="loginUser()" class="w-full py-3 bg-[#5C2A33] text-white rounded-2xl font-semibold text-sm active:bg-[#2A1A1E]">Войти</button>
+                        <div class="text-center text-xs text-[#5C2A33]/50">Забыли пароль? Напишите Мади в Telegram</div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <button onclick="showAdminLogin()" class="w-full py-3 border border-[#C9A55C] text-[#5C2A33] rounded-2xl font-semibold text-sm flex items-center justify-center gap-x-2 active:bg-[#C9A55C]/10">
+                        <i class="fa-solid fa-user-shield"></i> Я Мади (Вход для админа)
+                    </button>
+                </div>
+
+                <div id="profile-stats" class="hidden">
+                    <div class="section-card p-5 mb-5">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="font-semibold">🔥 Стрик: <span class="text-[#E07686]">24 дня</span></div>
+                            <div class="text-xs bg-[#FBE8EA] px-3 py-1 rounded-2xl">Февраль 2026</div>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 text-center text-xs">
+                            <div class="text-[#5C2A33]/40">Пн</div><div class="text-[#5C2A33]/40">Вт</div><div class="text-[#5C2A33]/40">Ср</div><div class="text-[#5C2A33]/40">Чт</div><div class="text-[#5C2A33]/40">Пт</div><div class="text-[#5C2A33]/40">Сб</div><div class="text-[#5C2A33]/40">Вс</div>
+                            <div class="py-1 text-[#5C2A33]/30">27</div><div class="py-1 text-[#5C2A33]/30">28</div><div class="py-1 text-[#5C2A33]/30">29</div><div class="py-1 text-[#5C2A33]/30">30</div><div class="py-1 text-[#5C2A33]/30">31</div>
+                            <div class="py-1 text-[#84C474]">1</div><div class="py-1 text-[#84C474]">2</div>
+                            <div class="py-1 bg-[#E07686] text-white rounded-full">3</div><div class="py-1 bg-[#E07686] text-white rounded-full">4</div><div class="py-1 bg-[#E07686] text-white rounded-full">5</div><div class="py-1 bg-[#E07686] text-white rounded-full">6</div><div class="py-1 bg-[#E07686] text-white rounded-full">7</div><div class="py-1 bg-[#E07686] text-white rounded-full">8</div><div class="py-1 bg-[#E07686] text-white rounded-full">9</div>
+                            <div class="py-1 bg-[#E07686] text-white rounded-full">10</div><div class="py-1 bg-[#E07686] text-white rounded-full">11</div><div class="py-1 bg-[#E07686] text-white rounded-full">12</div><div class="py-1 bg-[#E07686] text-white rounded-full">13</div><div class="py-1 bg-[#E07686] text-white rounded-full">14</div><div class="py-1 bg-[#E07686] text-white rounded-full">15</div><div class="py-1 bg-[#E07686] text-white rounded-full">16</div>
+                            <div class="py-1 bg-[#F2A6AE] text-white rounded-full">17</div><div class="py-1 bg-[#F2A6AE] text-white rounded-full">18</div><div class="py-1 bg-[#F2A6AE] text-white rounded-full">19</div><div class="py-1 bg-[#F2A6AE] text-white rounded-full">20</div><div class="py-1 bg-[#F2A6AE] text-white rounded-full">21</div><div class="py-1 bg-[#F2A6AE] text-white rounded-full">22</div><div class="py-1 bg-[#F2A6AE] text-white rounded-full">23</div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-xs uppercase tracking-widest text-[#5C2A33]/60 mb-2 px-1">Достижения</div>
+                    <div class="flex gap-x-3 overflow-x-auto pb-2">
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#C9A55C] to-[#E07686] rounded-2xl flex items-center justify-center text-2xl shadow">🌱</div>
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#F2A6AE] to-[#E07686] rounded-2xl flex items-center justify-center text-2xl shadow">🌸</div>
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#84C474] to-[#5C2A33] rounded-2xl flex items-center justify-center text-2xl shadow">⭐</div>
+                        <div class="flex-shrink-0 w-12 h-12 bg-white border border-[#F2A6AE] rounded-2xl flex items-center justify-center text-2xl">📚</div>
+                    </div>
+                    
+                    <button onclick="shareProgress()" class="mt-5 w-full py-4 bg-[#5C2A33] text-white rounded-2xl font-medium flex items-center justify-center gap-x-2 active:bg-[#2A1A1E]">
+                        <i class="fa-solid fa-share-alt"></i> Поделиться прогрессом в сторис
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lesson Flow Modal -->
+            <div id="lesson-flow" class="hidden fixed inset-0 z-[200] bg-black/70 flex items-end" onclick="if (event.target.id === 'lesson-flow') closeLessonFlow()">
+                <div onclick="event.stopImmediatePropagation()" class="bg-white w-full max-w-[420px] mx-auto rounded-t-3xl overflow-hidden" style="height: 92%;">
+                    <div id="lesson-content" class="h-full overflow-y-auto"></div>
+                </div>
+            </div>
+
+            <!-- Flashcard Modal -->
+            <div id="flashcard-modal" class="hidden fixed inset-0 z-[250] bg-black/70 flex items-center justify-center" onclick="if (event.target.id === 'flashcard-modal') closeFlashcards()">
+                <div onclick="event.stopImmediatePropagation()" class="bg-white w-[92%] max-w-[380px] rounded-3xl p-6">
+                    <div class="flex justify-between mb-4">
+                        <div>
+                            <div class="text-sm font-semibold">Карточки слов</div>
+                            <div class="text-xs text-[#5C2A33]/60">3 из 12 сегодня • SM-2</div>
+                        </div>
+                        <button onclick="closeFlashcards()" class="text-2xl">×</button>
+                    </div>
+                    
+                    <div class="h-[260px] relative mb-6" id="flashcard-container">
+                        <div id="flashcard" onclick="flipFlashcard()" class="flashcard w-full h-full cursor-pointer">
+                            <!-- Front populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-2" id="rating-buttons">
+                        <button onclick="rateFlashcard(0)" class="py-2.5 bg-white border border-[#E89BA1] text-[#E89BA1] rounded-2xl text-xs active:bg-[#FBE8EA]">😵<br><span class="text-[9px]">Не помню</span></button>
+                        <button onclick="rateFlashcard(1)" class="py-2.5 bg-white border border-[#F2A6AE] text-[#5C2A33] rounded-2xl text-xs active:bg-[#FBE8EA]">🤔<br><span class="text-[9px]">С трудом</span></button>
+                        <button onclick="rateFlashcard(2)" class="py-2.5 bg-white border border-[#84C474] text-[#5C2A33] rounded-2xl text-xs active:bg-[#FBE8EA]">🙂<br><span class="text-[9px]">Знаю</span></button>
+                        <button onclick="rateFlashcard(3)" class="py-2.5 bg-[#5C2A33] text-white rounded-2xl text-xs active:bg-[#2A1A1E]">🌟<br><span class="text-[9px]">Идеально!</span></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Nav (5 items now) -->
+        <div class="absolute bottom-0 left-0 right-0 h-[68px] bg-white border-t border-[#F2A6AE]/30 flex items-center z-40" style="box-shadow: 0 -2px 6px rgba(92,42,51,.04);">
+            <div onclick="switchScreen('home')" class="flex-1 flex flex-col items-center justify-center text-[13px] cursor-pointer nav-active" id="nav-home"><i class="fa-solid fa-home text-xl mb-0.5"></i><div>Главная</div></div>
+            <div onclick="switchScreen('lessons')" class="flex-1 flex flex-col items-center justify-center text-[13px] cursor-pointer" id="nav-lessons"><i class="fa-solid fa-book text-xl mb-0.5"></i><div>Уроки</div></div>
+            <div onclick="switchScreen('hangul')" class="flex-1 flex flex-col items-center justify-center text-[13px] cursor-pointer" id="nav-hangul"><i class="fa-solid fa-font text-xl mb-0.5"></i><div>한글</div></div>
+            <div onclick="switchScreen('games')" class="flex-1 flex flex-col items-center justify-center text-[13px] cursor-pointer" id="nav-games"><i class="fa-solid fa-gamepad text-xl mb-0.5"></i><div>Игры</div></div>
+            <div onclick="switchScreen('profile')" class="flex-1 flex flex-col items-center justify-center text-[13px] cursor-pointer" id="nav-profile"><i class="fa-solid fa-user text-xl mb-0.5"></i><div>Профиль</div></div>
+        </div>
+    </div>
+
+    <!-- Tweaks -->
+    <div class="twk-panel" id="tweaks-panel">
+        <div class="px-4 py-3 flex justify-between items-center border-b border-[#E5E5EA]">
+            <b class="text-xs tracking-wider">TWEAKS</b>
+            <button onclick="document.getElementById('tweaks-panel').style.display='none'" class="text-[#5C2A33]/60">✕</button>
+        </div>
+        <div class="p-4 text-xs space-y-4">
+            <div><div class="flex justify-between mb-1"><span>Имя</span> <span id="tweak-name-val">Мадинa</span></div><input type="text" value="Мадинa" oninput="updateTweak('userName', this.value)" class="w-full bg-white border border-[#E5E5EA] rounded px-2 py-1 text-xs"></div>
+            <div><div class="flex justify-between mb-1"><span>Стрик</span> <span id="tweak-streak-val">23</span></div><input type="range" min="0" max="120" value="23" oninput="updateTweak('streak', this.value)" class="w-full accent-[#E07686]"></div>
+            <div><div class="flex justify-between mb-1"><span>XP</span> <span id="tweak-xp-val">1240</span></div><input type="range" min="0" max="2000" value="1240" oninput="updateTweak('xp', this.value)" class="w-full accent-[#E07686]"></div>
+        </div>
+    </div>
+
+    <script>
+        function initTailwind() {}
+        
+        let currentScreen = 'home';
+        let lessonStage = 0;
+        let practiceType = 'A';
+        let tweaks = { userName: "Мадинa", streak: 23, xp: 1240 };
+        let isLoggedIn = false;
+        
+        // Hangul Lab Data
+        const consonants = ['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅅ','ㅇ','ㅈ','ㅎ'];
+        const vowels = ['ㅏ','ㅑ','ㅓ','ㅕ','ㅗ','ㅛ','ㅜ','ㅠ','ㅡ','ㅣ'];
+        const syllableMap = {
+            'ㄱㅏ':'가','ㄱㅑ':'갸','ㄱㅓ':'거','ㄱㅕ':'겨','ㄱㅗ':'고',
+            'ㄴㅏ':'나','ㄴㅑ':'냐','ㄴㅓ':'너','ㄴㅕ':'녀','ㄴㅗ':'노',
+            'ㄷㅏ':'다','ㄷㅑ':'댜','ㄷㅓ':'더','ㄷㅕ':'뎌','ㄷㅗ':'도',
+            'ㄹㅏ':'라','ㄹㅑ':'랴','ㄹㅓ':'러','ㄹㅕ':'려','ㄹㅗ':'로',
+            'ㅁㅏ':'마','ㅁㅑ':'먀','ㅁㅓ':'머','ㅁㅕ':'며','ㅁㅗ':'모',
+            'ㅂㅏ':'바','ㅂㅑ':'뱌','ㅂㅓ':'버','ㅂㅕ':'벼','ㅂㅗ':'보',
+            'ㅅㅏ':'사','ㅅㅑ':'샤','ㅅㅓ':'서','ㅅㅕ':'셔','ㅅㅗ':'소',
+            'ㅇㅏ':'아','ㅇㅑ':'야','ㅇㅓ':'어','ㅇㅕ':'여','ㅇㅗ':'오',
+            'ㅈㅏ':'자','ㅈㅑ':'쟈','ㅈㅓ':'저','ㅈㅕ':'져','ㅈㅗ':'조',
+            'ㅎㅏ':'하','ㅎㅑ':'햐','ㅎㅓ':'허','ㅎㅕ':'혀','ㅎㅗ':'호'
+        };
+        
+        let currentHangul = { cons: 'ㄱ', vowel: 'ㅏ', result: '가' };
+        let selectedConsBtn = null;
+        let selectedVowelBtn = null;
+        
+        // Flashcards Data
+        const flashcardData = [
+            { front: '꽃', translit: 'kkot', emoji: '🌸', meaning: 'цветок', example: '예쁜 꽃 받았어 — Получила красивый цветок' },
+            { front: '사랑', translit: 'sarang', emoji: '❤️', meaning: 'любовь', example: '너를 사랑해 — Я люблю тебя' },
+            { front: '안녕', translit: 'annyeong', emoji: '👋', meaning: 'привет / пока', example: '안녕하세요! — Здравствуйте!' },
+            { front: '김치', translit: 'kimchi', emoji: '🥬', meaning: 'кимчи', example: '김치가 맛있어요 — Кимчи вкусная' }
+        ];
+        let currentCardIndex = 0;
+        let cardFlipped = false;
+        
+        function updateTweak(key, val) {
+            tweaks[key] = (key === 'userName') ? val : Number(val);
+            if (key === 'userName') document.getElementById('user-name').innerText = val;
+            if (key === 'streak') document.getElementById('streak-value').innerText = val;
+            if (key === 'xp') document.getElementById('xp-value').innerText = val;
+            
+            document.getElementById('tweak-name-val').innerText = tweaks.userName;
+            document.getElementById('tweak-streak-val').innerText = tweaks.streak;
+            document.getElementById('tweak-xp-val').innerText = tweaks.xp;
+        }
+        
+        function switchScreen(screen) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById('screen-' + screen).classList.remove('hidden');
+            
+            document.querySelectorAll('[id^="nav-"]').forEach(n => n.classList.remove('nav-active'));
+            const nav = document.getElementById('nav-' + screen);
+            if (nav) nav.classList.add('nav-active');
+            currentScreen = screen;
+            
+            if (screen === 'hangul') initHangulLab();
+        }
+        
+        function showCalendar() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/70 flex items-end z-[300]';
+            modal.innerHTML = `
+                <div class="bg-white w-full max-w-[420px] mx-auto rounded-t-3xl overflow-hidden" style="height: 86%;">
+                    <!-- Header -->
+                    <div class="px-5 pt-5 pb-4 bg-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-xl font-bold text-[#5C2A33]">한국 달력 / Календарь</div>
+                                <div class="text-xs text-[#5C2A33]/60">Праздники, традиции и важные дни</div>
+                            </div>
+                            <div onclick="this.closest('.fixed').remove()" class="text-3xl leading-none cursor-pointer text-[#5C2A33]/60">×</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Today Card -->
+                    <div class="px-5">
+                        <div class="rounded-3xl p-5 text-white mb-4" style="background: linear-gradient(135deg, #E07686 0%, #F2A6AE 100%);">
+                            <div class="flex items-center gap-x-2 mb-1">
+                                <span class="text-xs px-2 py-px bg-white/30 rounded-full">СЕГОДНЯ • TODAY</span>
+                            </div>
+                            <div class="text-2xl font-bold">5월 4일 • 4 мая • понедельник</div>
+                            <div class="mt-2 text-sm opacity-90">Сегодня обычный день, но скоро 어린이날 🌸<br>через 1 день</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Soon Section -->
+                    <div class="px-5">
+                        <div class="flex items-center justify-between mb-3 px-1">
+                            <div class="flex items-center gap-x-2">
+                                <span class="text-lg">🌸</span>
+                                <span class="font-semibold text-[#5C2A33]">Скоро</span>
+                            </div>
+                            <span class="text-xs text-[#E07686]">ближайшие праздники</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- Children's Day -->
+                            <div class="bg-white border border-[#F2A6AE]/50 rounded-2xl p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="text-3xl mb-1">🐟</div>
+                                        <div class="font-bold text-[#5C2A33]">어린이날</div>
+                                        <div class="text-xs text-[#5C2A33]/70">День детей</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-[10px] text-[#E07686]">ЧЕРЕЗ 1 ДЕНЬ</div>
+                                        <div class="text-xs font-bold text-[#5C2A33]">5 мая</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Parents' Day -->
+                            <div class="bg-white border border-[#F2A6AE]/50 rounded-2xl p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="text-3xl mb-1">🌷</div>
+                                        <div class="font-bold text-[#5C2A33]">어버이날</div>
+                                        <div class="text-xs text-[#5C2A33]/70">День родителей</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-[10px] text-[#E07686]">ЧЕРЕЗ 4 ДНЯ</div>
+                                        <div class="text-xs font-bold text-[#5C2A33]">8 мая</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- May Calendar -->
+                    <div class="px-5 mt-5">
+                        <div class="flex items-center justify-between mb-2 px-1">
+                            <div class="font-semibold text-[#5C2A33]">Май в Корее</div>
+                            <div class="text-xs text-[#E07686]">5월</div>
+                        </div>
+                        
+                        <div class="bg-white border border-[#F2A6AE]/40 rounded-2xl p-4">
+                            <!-- Weekdays -->
+                            <div class="grid grid-cols-7 text-center text-xs text-[#5C2A33]/60 mb-1">
+                                <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+                            </div>
+                            
+                            <!-- Dates -->
+                            <div class="grid grid-cols-7 text-center text-sm">
+                                <div class="py-1 text-[#5C2A33]/30">27</div>
+                                <div class="py-1 text-[#5C2A33]/30">28</div>
+                                <div class="py-1 text-[#5C2A33]/30">29</div>
+                                <div class="py-1 text-[#5C2A33]/30">30</div>
+                                <div class="py-1">1</div>
+                                <div class="py-1">2</div>
+                                <div class="py-1">3</div>
+                                
+                                <div class="py-1 bg-[#5C2A33] text-white rounded-full font-bold">4</div>
+                                <div class="py-1 bg-[#FBE8EA] text-[#E07686] font-bold rounded-full">5</div>
+                                <div class="py-1">6</div>
+                                <div class="py-1">7</div>
+                                <div class="py-1 bg-[#FBE8EA] text-[#E07686] font-bold rounded-full">8</div>
+                                <div class="py-1">9</div>
+                                <div class="py-1">10</div>
+                                
+                                <div class="py-1">11</div><div class="py-1">12</div><div class="py-1">13</div><div class="py-1">14</div><div class="py-1">15</div><div class="py-1">16</div><div class="py-1">17</div>
+                                <div class="py-1">18</div><div class="py-1">19</div><div class="py-1">20</div><div class="py-1">21</div><div class="py-1">22</div><div class="py-1">23</div><div class="py-1">24</div>
+                                <div class="py-1">25</div><div class="py-1">26</div><div class="py-1">27</div><div class="py-1">28</div><div class="py-1">29</div><div class="py-1">30</div><div class="py-1">31</div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center text-xs text-[#5C2A33]/50 mt-3">Нажми на дату, чтобы узнать больше о празднике</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        // Lesson Flow
+        function startLessonFlow() {
+            const flow = document.getElementById('lesson-flow');
+            const content = document.getElementById('lesson-content');
+            flow.style.display = 'flex';
+            flow.classList.remove('hidden');
+            lessonStage = 0;
+            renderLessonStage(content);
+        }
+        
+        function closeLessonFlow() {
+            const flow = document.getElementById('lesson-flow');
+            flow.style.display = 'none';
+            flow.classList.add('hidden');
+        }
+        
+        function renderLessonStage(container) {
+            const stages = [
+                () => `<div class="px-6 pt-7 pb-9 lesson-flow-stage">
+                    <div class="flex justify-between items-center mb-6">
+                        <button onclick="closeLessonFlow()" class="text-2xl">✕</button>
+                        <div class="flex gap-x-1.5">${Array.from({length:5}, (_,i) => `<div class="w-6 h-1 rounded ${i === 0 ? 'bg-[#E07686]' : 'bg-[#F2A6AE]/40'}"></div>`).join('')}</div>
+                        <div class="text-xs text-[#5C2A33]/60">Этап 1 из 5</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="uppercase text-[#E07686] text-xs tracking-[2px]">УРОК 5 · ХАНГЫЛЬ</div>
+                        <div class="text-[28px] font-semibold display-font text-[#5C2A33] mt-1">Конструктор слогов</div>
+                        <div class="korean-text text-xl text-[#F2A6AE] mt-px">음절 만들기</div>
+                    </div>
+                    <div class="madie-quote mt-8">
+                        <div class="flex items-center gap-x-3 mb-3">
+                            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center ring-1 ring-[#C9A55C]"><span class="text-lg">🌸</span></div>
+                            <div><span class="font-medium text-sm">Мади 🌸</span> <span class="text-xs text-[#5C2A33]/50 ml-2">1 минута</span></div>
+                        </div>
+                        <p class="text-[#5C2A33] text-[15px] leading-snug">«Сегодня сложим первые слоги. Помнишь <span class="korean-text">ㄱ</span> из вчерашнего? Сегодня покажу, как из него рождается <span class="korean-text">가</span>. Это магия 🌸 화이팅!»</p>
+                    </div>
+                    <div class="mt-7"><div class="uppercase text-xs tracking-widest text-[#5C2A33]/60 mb-3 px-1">что выучим</div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="bg-white rounded-2xl p-3 text-center shadow-sm"><div class="text-2xl mb-1">🧩</div><div class="text-xs">Как складывать</div></div>
+                            <div class="bg-white rounded-2xl p-3 text-center shadow-sm"><div class="text-2xl mb-1">🔤</div><div class="text-xs">5 новых слогов</div></div>
+                            <div class="bg-white rounded-2xl p-3 text-center shadow-sm"><div class="text-2xl mb-1">🎯</div><div class="text-xs">5 упражнений</div></div>
+                        </div>
+                    </div>
+                    <button onclick="nextLessonStage()" class="mt-8 w-full py-4 bg-[#E07686] text-white rounded-2xl font-semibold flex items-center justify-center gap-x-2 active:bg-[#D65A6E]">Поехали <span class="korean-text">시작!</span> <i class="fa-solid fa-arrow-right"></i></button>
+                    <div class="text-center text-xs text-[#5C2A33]/50 mt-3">~7 минут · можно прервать в любой момент</div>
+                </div>`,
+                () => `<div class="px-5 pt-5 pb-8 lesson-flow-stage">
+                    <div class="flex justify-between items-center mb-5">
+                        <button onclick="closeLessonFlow()" class="text-2xl">✕</button>
+                        <div class="flex gap-x-1.5">${Array.from({length:5}, (_,i) => `<div class="w-6 h-1 rounded ${i <= 1 ? 'bg-[#E07686]' : 'bg-[#F2A6AE]/40'}"></div>`).join('')}</div>
+                        <div class="text-xs text-[#5C2A33]/60">Этап 2 из 5</div>
+                    </div>
+                    <div class="uppercase text-[#E07686] text-xs tracking-[1.5px]">ТЕОРИЯ</div>
+                    <div class="text-2xl font-semibold text-[#5C2A33]">Как рождается слог</div>
+                    <div class="flex justify-center gap-x-4 mt-8 mb-4">
+                        <div class="w-20 h-20 bg-white border border-[#F2A6AE] rounded-2xl flex flex-col items-center justify-center"><span class="korean-text text-5xl">ㄱ</span><span class="text-[9px] text-[#5C2A33]/60">ki-yok</span></div>
+                        <div class="text-4xl text-[#F2A6AE] mt-5">+</div>
+                        <div class="w-20 h-20 bg-white border border-[#F2A6AE] rounded-2xl flex flex-col items-center justify-center"><span class="korean-text text-5xl">ㅏ</span><span class="text-[9px] text-[#5C2A33]/60">a</span></div>
+                        <div class="text-4xl text-[#F2A6AE] mt-5">=</div>
+                        <div class="w-20 h-20 bg-gradient-to-br from-[#E07686] to-[#C9A55C] rounded-2xl flex flex-col items-center justify-center text-white"><span class="korean-text text-6xl">가</span><span class="text-[9px] opacity-80">ka</span></div>
+                    </div>
+                    <div class="text-center text-sm text-[#5C2A33]/70">Согласная вверх/влево + гласная вниз/вправо = слог</div>
+                    <div class="mt-6 bg-[#C9A55C]/10 border border-[#C9A55C]/40 rounded-2xl p-4 text-sm"><div class="flex gap-x-2"><span class="text-xl">✨</span><p class="text-[#5C2A33]">Если гласная вертикальная (ㅏ, ㅣ, ㅓ) — справа от согласной. Если горизонтальная (ㅗ, ㅜ, ㅡ) — снизу.</p></div></div>
+                    <div class="flex gap-3 mt-8"><button onclick="prevLessonStage()" class="flex-1 py-3 border border-[#F2A6AE] rounded-2xl text-sm">← Назад</button><button onclick="nextLessonStage()" class="flex-[2] py-3 bg-[#5C2A33] text-white rounded-2xl text-sm font-semibold">Понятно ✓</button></div>
+                </div>`,
+                () => {
+                    let html = `<div class="px-5 pt-5 pb-8 lesson-flow-stage"><div class="flex justify-between items-center mb-5"><button onclick="closeLessonFlow()" class="text-2xl">✕</button><div class="flex gap-x-1.5">${Array.from({length:5}, (_,i) => `<div class="w-6 h-1 rounded ${i <= 2 ? 'bg-[#E07686]' : 'bg-[#F2A6AE]/40'}"></div>`).join('')}</div><div class="text-xs text-[#5C2A33]/60">Этап 3 из 5 · Задание 2/7</div></div><div class="uppercase text-[#E07686] text-xs tracking-[1.5px] text-center">ПРАКТИКА</div>`;
+                    if (practiceType === 'A') {
+                        html += `<div class="text-center mt-4"><div class="text-xl font-semibold">Какой слог получится из ㄴ + ㅏ?</div><div class="grid grid-cols-2 gap-4 mt-6">${['가','나','다','라'].map((s,i) => `<div onclick="checkPracticeAnswer(this, '${s}', '나')" class="aspect-square border border-[#F2A6AE] rounded-3xl flex items-center justify-center cursor-pointer active:scale-95"><span class="korean-text text-6xl">${s}</span></div>`).join('')}</div></div>`;
+                    } else if (practiceType === 'B') {
+                        html += `<div class="text-center mt-4"><div class="text-lg font-semibold">Собери слог <span class="korean-text">가</span></div><div class="mt-4 border-2 border-dashed border-[#F2A6AE] rounded-3xl h-28 flex items-center justify-center text-[#5C2A33]/40">Перетащи сюда ㄱ и ㅏ</div><div class="flex justify-center gap-4 mt-6"><div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow cursor-grab">ㄱ</div><div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow cursor-grab">ㅏ</div><div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow cursor-grab">ㄴ</div></div></div>`;
+                    } else {
+                        html += `<div class="text-center mt-4"><div class="text-lg font-semibold mb-4">Послушай и выбери</div><button onclick="playAudioDemo(this)" class="mx-auto w-28 h-28 bg-gradient-to-br from-[#FBE8EA] to-[#E07686] rounded-full flex items-center justify-center text-5xl shadow-xl active:scale-95">🔊</button><div class="text-xs text-[#5C2A33]/60 mt-2">Тапни, чтобы послушать (ещё 3 раза)</div><div class="grid grid-cols-2 gap-3 mt-6">${['가','나','다','라'].map(s => `<div onclick="checkPracticeAnswer(this, '${s}', '나')" class="py-5 border border-[#F2A6AE] rounded-2xl cursor-pointer active:bg-[#FBE8EA]"><span class="korean-text text-4xl">${s}</span></div>`).join('')}</div></div>`;
+                    }
+                    html += `</div>`;
+                    return html;
+                },
+                () => `<div class="px-5 pt-5 pb-8 lesson-flow-stage"><div class="flex justify-between items-center mb-5"><button onclick="closeLessonFlow()" class="text-2xl">✕</button><div class="flex gap-x-1.5">${Array.from({length:5}, (_,i) => `<div class="w-6 h-1 rounded ${i <= 3 ? 'bg-[#E07686]' : 'bg-[#F2A6AE]/40'}"></div>`).join('')}</div><div class="text-xs text-[#5C2A33]/60">Этап 4 из 5</div></div><div class="text-2xl font-semibold">Что мы выучили сегодня 🌸</div><div class="text-sm text-[#E07686]">5 новых слогов</div><div class="grid grid-cols-5 gap-2 mt-6">${['가','나','다','라','마'].map(s => `<div class="bg-gradient-to-br from-[#FBE8EA] to-[#F2A6AE] rounded-2xl p-2 text-center"><div class="korean-text text-4xl">${s}</div><div class="text-[9px] text-[#5C2A33]/60 mt-px">${s === '가' ? 'ka' : s === '나' ? 'na' : s === '다' ? 'ta' : s === '라' ? 'ra' : 'ma'}</div></div>`).join('')}</div><div class="grid grid-cols-3 gap-3 mt-7"><div class="text-center"><div class="text-2xl font-semibold">6/7</div><div class="text-xs text-[#5C2A33]/60">правильно</div></div><div class="text-center"><div class="text-2xl font-semibold">5:23</div><div class="text-xs text-[#5C2A33]/60">время</div></div><div class="text-center"><div class="text-2xl font-semibold text-[#C9A55C]">+20</div><div class="text-xs text-[#5C2A33]/60">XP</div></div></div><div class="madie-quote mt-7"><p class="text-sm">«Молодец! <span class="korean-text">잘했어</span> 🌸 Завтра соберём из этих слогов первое корейское слово. Жду тебя!» — Мади</p></div><button onclick="nextLessonStage()" class="mt-6 w-full py-4 bg-[#E07686] text-white rounded-2xl font-semibold">Дальше →</button></div>`,
+                () => `<div class="px-5 pt-8 pb-8 text-center relative lesson-flow-stage"><div class="text-7xl mb-4">🌸</div><div class="text-3xl font-semibold display-font">Урок 5 пройден</div><div class="korean-text text-2xl text-[#E07686] mt-1">잘했어 🌸</div><div class="mt-8 mx-auto w-48 h-48 bg-white rounded-full flex items-center justify-center ring-[12px] ring-[#C9A55C]/20 relative"><div class="text-[110px] text-[#84C474]">✓</div>${Array.from({length:8}).map((_,i) => `<div class="sakura absolute text-2xl" style="left: ${28 + Math.random()*145}px; top: ${18 + Math.random()*145}px; animation-delay: -${i*0.5}s;">🌸</div>`).join('')}</div><div class="mt-6 section-card p-4 mx-4" style="background: linear-gradient(135deg, #C9A55C 0%, #E07686 100%); color: white;"><div class="text-xs uppercase tracking-widest opacity-80">🔓 РАЗБЛОКИРОВАНО</div><div class="font-semibold mt-1">Урок 6 · Согласные II</div><div class="text-xs opacity-85 mt-1">Завтра встретимся снова 🌸</div></div><div class="flex gap-3 mt-6 px-4"><button onclick="closeLessonFlow()" class="flex-1 py-3 border border-[#F2A6AE] rounded-2xl text-sm">↻ Повторить</button><button onclick="completeLesson()" class="flex-[1.6] py-3 bg-[#5C2A33] text-white rounded-2xl text-sm font-semibold">Готово, я выучила ✓</button></div><div class="text-xs text-[#5C2A33]/50 mt-4">Стрик 🔥 23 → 24, +20 ✨ к карме</div></div>`
+            ];
+            container.innerHTML = stages[lessonStage]();
+            if (lessonStage === 4) setTimeout(() => { for (let i = 0; i < 12; i++) { const c = document.createElement('div'); c.className = 'sakura'; c.style.left = Math.random()*100+'%'; c.style.top = '-8px'; c.style.fontSize = (11+Math.random()*9)+'px'; c.innerHTML = ['🌸','✨','💗'][Math.floor(Math.random()*3)]; container.appendChild(c); setTimeout(() => c.remove(), 4800); } }, 380);
+        }
+        
+        function nextLessonStage() { lessonStage++; if (lessonStage > 4) lessonStage = 4; const container = document.getElementById('lesson-content'); renderLessonStage(container); if (lessonStage === 2) practiceType = ['A','B','C'][Math.floor(Math.random()*3)]; }
+        function prevLessonStage() { lessonStage = Math.max(0, lessonStage - 1); const container = document.getElementById('lesson-content'); renderLessonStage(container); }
+        
+        function checkPracticeAnswer(el, chosen, correct) {
+            const all = el.parentElement.children; for (let i = 0; i < all.length; i++) all[i].style.pointerEvents = 'none';
+            if (chosen === correct) {
+                el.style.border = '3px solid #84C474'; el.style.background = '#E8F5E9';
+                el.innerHTML += '<span class="absolute top-2 right-2 text-[#84C474]">✓</span>';
+                setTimeout(() => {
+                    const banner = document.createElement('div'); banner.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#5C2A33] text-white px-6 py-3 rounded-2xl text-sm flex items-center gap-x-2 z-[999]'; banner.innerHTML = `잘했어! 🌸 +20 XP`; document.body.appendChild(banner);
+                    setTimeout(() => { banner.style.transition = 'all .3s'; banner.style.opacity = '0'; setTimeout(() => banner.remove(), 300); nextLessonStage(); }, 1350);
+                }, 650);
+            } else {
+                el.style.border = '3px solid #E89BA1'; el.style.background = '#FFEBEE';
+                setTimeout(() => { el.style.border = '1px solid #F2A6AE'; el.style.background = 'white'; for (let i = 0; i < all.length; i++) all[i].style.pointerEvents = 'auto'; }, 620);
+            }
+        }
+        
+        function completeLesson() {
+            const flow = document.getElementById('lesson-flow'); flow.style.display = 'none'; flow.classList.add('hidden');
+            tweaks.streak = 24; tweaks.xp = 1260;
+            document.getElementById('streak-value').innerText = '24';
+            document.getElementById('xp-value').innerText = '1260';
+            const toast = document.createElement('div'); toast.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#84C474] text-white px-6 py-3 rounded-3xl text-sm flex items-center gap-x-2 z-[300]'; toast.innerHTML = `Урок пройден! 🔥 Стрик 24 дня`; document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transition = 'all .4s'; toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 1750);
+        }
+        
+        // Hangul Lab
+        function initHangulLab() {
+            const consGrid = document.getElementById('consonants-grid');
+            const vowGrid = document.getElementById('vowels-grid');
+            
+            consGrid.innerHTML = '';
+            vowGrid.innerHTML = '';
+            
+            consonants.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = `hangul-btn aspect-square flex flex-col items-center justify-center bg-white border border-[#F2A6AE] rounded-2xl text-3xl font-bold text-[#5C2A33] active:bg-[#FBE8EA]`;
+                btn.innerHTML = `<div>${c}</div><div class="text-[9px] text-[#5C2A33]/50 mt-[-2px]">${getTranslit(c)}</div>`;
+                btn.onclick = () => selectConsonant(c, btn);
+                consGrid.appendChild(btn);
+            });
+            
+            vowels.forEach(v => {
+                const btn = document.createElement('button');
+                btn.className = `hangul-btn aspect-square flex flex-col items-center justify-center bg-white border border-[#F2A6AE] rounded-2xl text-3xl font-bold text-[#5C2A33] active:bg-[#FBE8EA]`;
+                btn.innerHTML = `<div>${v}</div><div class="text-[9px] text-[#5C2A33]/50 mt-[-2px]">${getTranslit(v)}</div>`;
+                btn.onclick = () => selectVowel(v, btn);
+                vowGrid.appendChild(btn);
+            });
+            
+            // Set initial
+            updateHangulResult('ㄱ', 'ㅏ');
+            
+            // Auto-select first buttons
+            setTimeout(() => {
+                const firstCons = consGrid.children[0];
+                const firstVow = vowGrid.children[0];
+                if (firstCons) { firstCons.classList.add('!bg-[#E07686]', '!text-white', 'border-[#E07686]'); selectedConsBtn = firstCons; }
+                if (firstVow) { firstVow.classList.add('!bg-[#F2A6AE]', '!text-white', 'border-[#F2A6AE]'); selectedVowelBtn = firstVow; }
+            }, 50);
+        }
+        
+        function getTranslit(char) {
+            const map = {'ㄱ':'g','ㄴ':'n','ㄷ':'d','ㄹ':'r/l','ㅁ':'m','ㅂ':'b','ㅅ':'s','ㅇ':'ng','ㅈ':'j','ㅎ':'h',
+                         'ㅏ':'a','ㅑ':'ya','ㅓ':'eo','ㅕ':'yeo','ㅗ':'o','ㅛ':'yo','ㅜ':'u','ㅠ':'yu','ㅡ':'eu','ㅣ':'i'};
+            return map[char] || '?';
+        }
+        
+        function selectConsonant(cons, btn) {
+            if (selectedConsBtn) selectedConsBtn.classList.remove('!bg-[#E07686]', '!text-white', 'border-[#E07686]');
+            btn.classList.add('!bg-[#E07686]', '!text-white', 'border-[#E07686]');
+            selectedConsBtn = btn;
+            currentHangul.cons = cons;
+            updateHangulResult(currentHangul.cons, currentHangul.vowel);
+        }
+        
+        function selectVowel(vowel, btn) {
+            if (selectedVowelBtn) selectedVowelBtn.classList.remove('!bg-[#F2A6AE]', '!text-white', 'border-[#F2A6AE]');
+            btn.classList.add('!bg-[#F2A6AE]', '!text-white', 'border-[#F2A6AE]');
+            selectedVowelBtn = btn;
+            currentHangul.vowel = vowel;
+            updateHangulResult(currentHangul.cons, currentHangul.vowel);
+        }
+        
+        function updateHangulResult(cons, vowel) {
+            const key = cons + vowel;
+            const result = syllableMap[key] || cons + vowel;
+            currentHangul.result = result;
+            
+            document.getElementById('hangul-result').innerHTML = result;
+            document.getElementById('hangul-translit').innerHTML = `[ ${getTranslit(cons)}${getTranslit(vowel)} ]`;
+            
+            document.getElementById('cons-display').innerHTML = cons;
+            document.getElementById('vowel-display').innerHTML = vowel;
+            document.getElementById('result-display').innerHTML = result;
+        }
+        
+        function speakCurrentSyllable() {
+            const utterance = new SpeechSynthesisUtterance(currentHangul.result);
+            utterance.lang = 'ko-KR';
+            utterance.rate = 0.85;
+            speechSynthesis.speak(utterance);
+            
+            const resultEl = document.getElementById('hangul-result');
+            resultEl.style.transform = 'scale(1.25)';
+            setTimeout(() => resultEl.style.transform = 'scale(1)', 180);
+        }
+        
+        function resetHangul() {
+            if (selectedConsBtn) selectedConsBtn.classList.remove('!bg-[#E07686]', '!text-white', 'border-[#E07686]');
+            if (selectedVowelBtn) selectedVowelBtn.classList.remove('!bg-[#F2A6AE]', '!text-white', 'border-[#F2A6AE]');
+            selectedConsBtn = null;
+            selectedVowelBtn = null;
+            
+            currentHangul = { cons: 'ㄱ', vowel: 'ㅏ', result: '가' };
+            updateHangulResult('ㄱ', 'ㅏ');
+            
+            const consGrid = document.getElementById('consonants-grid');
+            const vowGrid = document.getElementById('vowels-grid');
+            if (consGrid.children[0]) { consGrid.children[0].classList.add('!bg-[#E07686]', '!text-white', 'border-[#E07686]'); selectedConsBtn = consGrid.children[0]; }
+            if (vowGrid.children[0]) { vowGrid.children[0].classList.add('!bg-[#F2A6AE]', '!text-white', 'border-[#F2A6AE]'); selectedVowelBtn = vowGrid.children[0]; }
+        }
+        
+        function saveToFlashcards() {
+            const msg = document.createElement('div');
+            msg.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#5C2A33] text-white px-6 py-3 rounded-3xl text-sm flex items-center gap-x-2 shadow-xl z-[400]';
+            msg.innerHTML = `🌸 Слог <strong>${currentHangul.result}</strong> добавлен в карточки!`;
+            document.body.appendChild(msg);
+            
+            setTimeout(() => {
+                msg.style.transition = 'all 0.3s';
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 300);
+            }, 2100);
+            
+            // Bonus XP
+            tweaks.xp += 15;
+            document.getElementById('xp-value').innerText = tweaks.xp;
+        }
+        
+        // Flashcards
+        function startFlashcards() {
+            const modal = document.getElementById('flashcard-modal');
+            modal.style.display = 'flex';
+            currentCardIndex = 0;
+            cardFlipped = false;
+            showCurrentFlashcard();
+        }
+        
+        function closeFlashcards() {
+            const modal = document.getElementById('flashcard-modal');
+            modal.style.display = 'none';
+        }
+        
+        function showCurrentFlashcard() {
+            const card = flashcardData[currentCardIndex];
+            const container = document.getElementById('flashcard');
+            
+            container.innerHTML = `
+                <div class="section-card p-8 flex flex-col items-center justify-center text-center h-full">
+                    <div class="text-7xl mb-3">${card.emoji}</div>
+                    <div class="korean-text text-[68px] font-bold text-[#5C2A33] leading-none">${card.front}</div>
+                    <div class="text-[#E07686] tracking-[4px] mt-1 text-xl">[ ${card.translit} ]</div>
+                    
+                    <div class="mt-auto flex items-center gap-x-2 text-xs text-[#5C2A33]/50">
+                        <i class="fa-solid fa-volume-up"></i>
+                        <span>Тапни карточку, чтобы перевернуть</span>
+                    </div>
+                </div>
+            `;
+            
+            container.onclick = () => flipFlashcard();
+            
+            // Add speak on front
+            setTimeout(() => {
+                const front = container.querySelector('.section-card');
+                if (front) front.onclick = () => {
+                    const utterance = new SpeechSynthesisUtterance(card.front);
+                    utterance.lang = 'ko-KR';
+                    speechSynthesis.speak(utterance);
+                };
+            }, 100);
+        }
+        
+        function flipFlashcard() {
+            const container = document.getElementById('flashcard');
+            const card = flashcardData[currentCardIndex];
+            
+            if (!cardFlipped) {
+                container.classList.add('flipped');
+                setTimeout(() => {
+                    container.innerHTML = `
+                        <div class="section-card p-8 bg-gradient-to-br from-[#5C2A33] to-[#2A1A1E] text-white flex flex-col h-full">
+                            <div class="text-center">
+                                <div class="text-sm opacity-70">ЗНАЧИТ</div>
+                                <div class="text-4xl font-semibold mt-1">${card.meaning}</div>
+                            </div>
+                            
+                            <div class="my-6 text-center text-sm border-y border-white/20 py-4">
+                                «${card.example.split(' — ')[0]}»<br>
+                                <span class="opacity-80">— ${card.example.split(' — ')[1] || ''}</span>
+                            </div>
+                            
+                            <div class="text-xs opacity-75 mt-auto text-center">
+                                🌸 В Корее цветы дарят реже, чем в России.<br>
+                                Но молодёжь делает это всё чаще 💗
+                            </div>
+                        </div>
+                    `;
+                }, 280);
+            } else {
+                container.classList.remove('flipped');
+                setTimeout(() => showCurrentFlashcard(), 280);
+            }
+            cardFlipped = !cardFlipped;
+        }
+        
+        function rateFlashcard(rating) {
+            const container = document.getElementById('flashcard');
+            let feedback = '';
+            
+            if (rating === 0) feedback = 'Ах, ничего страшного 🌸 Попробуем ещё раз позже';
+            else if (rating === 1) feedback = 'Хорошо, что стараешься! Ещё чуть-чуть 💪';
+            else if (rating === 2) { feedback = '잘했어! Отлично, моя умница ✨'; tweaks.xp += 8; document.getElementById('xp-value').innerText = tweaks.xp; }
+            else { feedback = '와! Идеально! Ты просто огонь 🔥'; tweaks.xp += 15; document.getElementById('xp-value').innerText = tweaks.xp; createConfetti(); }
+            
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-28 left-1/2 -translate-x-1/2 bg-white shadow-xl px-5 py-3 rounded-3xl text-sm flex items-center gap-x-2 border border-[#F2A6AE] z-[400]';
+            toast.innerHTML = feedback;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transition = 'all .3s';
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 1550);
+            
+            setTimeout(() => {
+                currentCardIndex = (currentCardIndex + 1) % flashcardData.length;
+                cardFlipped = false;
+                showCurrentFlashcard();
+            }, 1750);
+        }
+        
+        function createConfetti() {
+            for (let i = 0; i < 22; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'sakura';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = '-18px';
+                conf.style.fontSize = (Math.random() * 13 + 11) + 'px';
+                conf.style.animationDuration = (Math.random() * 2.8 + 3.8) + 's';
+                conf.innerHTML = ['🌸', '✨', '💗'][Math.floor(Math.random() * 3)];
+                document.body.appendChild(conf);
+                setTimeout(() => conf.remove(), 6200);
+            }
+        }
+        
+        function playMadieVoice(btn) {
+            const utterance = new SpeechSynthesisUtterance('안녕하세요! 오늘은 화이팅이라는 단어에 대해 이야기해 볼게요. 화이팅은 응원할 때 쓰는 말이에요.');
+            utterance.lang = 'ko-KR'; utterance.pitch = 1.1; speechSynthesis.speak(utterance);
+            const original = btn.innerHTML; btn.innerHTML = `<i class="fa-solid fa-pause"></i> Пауза`;
+            utterance.onend = () => { btn.innerHTML = original; };
+        }
+        
+        function playAudioDemo(btn) {
+            const utterance = new SpeechSynthesisUtterance('서울에 벚꽃이 피기 시작했어요');
+            utterance.lang = 'ko-KR'; speechSynthesis.speak(utterance);
+            const original = btn.innerHTML; btn.innerHTML = `<i class="fa-solid fa-pause"></i> <span>Останавлив</span>`;
+            utterance.onend = () => { btn.innerHTML = original; };
+        }
+        
+        function startMatchGame() {
+            const modal = document.createElement('div'); modal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-[300]';
+            modal.innerHTML = `<div class="bg-white w-[92%] max-w-[360px] rounded-3xl p-6"><div class="text-center mb-4"><div class="text-xs text-[#E07686]">МИНИ-ИГРА</div><div class="font-semibold text-xl">Подбери картинку</div></div><div class="text-center mb-4"><div class="text-sm text-[#5C2A33]/70">Что значит</div><div class="korean-text text-6xl my-2">사랑</div><div class="text-[#E07686]">[ sarang ]</div></div><div class="grid grid-cols-2 gap-4"><div onclick="checkMatch(this, true)" class="h-20 border border-[#F2A6AE] rounded-2xl flex items-center justify-center text-5xl cursor-pointer active:scale-95">❤️</div><div onclick="checkMatch(this, false)" class="h-20 border border-[#F2A6AE] rounded-2xl flex items-center justify-center text-5xl cursor-pointer active:scale-95">🌸</div><div onclick="checkMatch(this, false)" class="h-20 border border-[#F2A6AE] rounded-2xl flex items-center justify-center text-5xl cursor-pointer active:scale-95">🍜</div><div onclick="checkMatch(this, false)" class="h-20 border border-[#F2A6AE] rounded-2xl flex items-center justify-center text-5xl cursor-pointer active:scale-95">📚</div></div></div>`;
+            document.body.appendChild(modal);
+        }
+        
+        function checkMatch(el, correct) {
+            if (correct) { el.style.border = '3px solid #84C474'; el.style.background = '#E8F5E9'; setTimeout(() => { el.closest('.fixed').remove(); const t = document.createElement('div'); t.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#84C474] text-white px-5 py-3 rounded-3xl text-sm z-[400]'; t.innerHTML = `잘했어! +30 XP 🌸`; document.body.appendChild(t); setTimeout(() => t.remove(), 1350); }, 620); }
+            else { el.style.border = '3px solid #E89BA1'; setTimeout(() => el.style.border = '1px solid #F2A6AE', 480); }
+        }
+        
+        function startBuildGame() { alert('🎮 Игра «Собери слово» — drag & drop джамо в полной версии!'); }
+        function startListenGame() { alert('🎧 Игра «На слух» — аудио + 4 варианта в полной версии!'); }
+        function startKpopGame() { alert('🎵 K-pop Fill — «미안해요, baby» с клипом в полной версии!'); }
+        
+        function loginUser() {
+            const username = document.getElementById('login-username').value || 'Мадинa';
+            const password = document.getElementById('login-password').value;
+            
+            if (password.length < 3) { alert('Пароль слишком короткий (минимум 3 символа)'); return; }
+            
+            isLoggedIn = true;
+            document.getElementById('profile-name').innerText = username;
+            document.getElementById('user-name').innerText = username.split(' ')[0];
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('profile-stats').classList.remove('hidden');
+            
+            const toast = document.createElement('div'); toast.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#84C474] text-white px-6 py-3 rounded-3xl text-sm z-[400]'; toast.innerHTML = `Добро пожаловать, ${username.split(' ')[0]}! 🌸`; document.body.appendChild(toast);
+            setTimeout(() => { toast.style.transition = 'all .4s'; toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 1650);
+        }
+        
+        function togglePassword(btn) {
+            const input = btn.parentElement.querySelector('input');
+            if (input.type === 'password') { input.type = 'text'; btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>'; }
+            else { input.type = 'password'; btn.innerHTML = '<i class="fa-solid fa-eye"></i>'; }
+        }
+        
+        function showAdminLogin() {
+            const modal = document.createElement('div'); modal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-[300]';
+            modal.innerHTML = `
+                <div class="bg-white w-[92%] max-w-[360px] rounded-3xl p-6">
+                    <div class="text-center mb-4"><div class="text-xs text-[#C9A55C]">АДМИН-ПАНЕЛЬ</div><div class="font-semibold text-xl">Вход для Мади ✨</div></div>
+                    <div class="space-y-3">
+                        <div><div class="text-xs text-[#5C2A33]/60 mb-1">Email</div><input type="email" value="madie@koreanwithmadie.com" class="w-full border border-[#C9A55C]/60 rounded-2xl px-4 py-2.5 text-sm"></div>
+                        <div><div class="text-xs text-[#5C2A33]/60 mb-1">Пароль</div><input type="password" value="madie2026" class="w-full border border-[#C9A55C]/60 rounded-2xl px-4 py-2.5 text-sm"></div>
+                    </div>
+                    <button onclick="loginAdmin(this)" class="mt-5 w-full py-3 bg-[#C9A55C] text-[#5C2A33] rounded-2xl font-semibold text-sm active:bg-[#B38A4A]">Войти в кабинет Мади</button>
+                    <div class="text-center text-xs text-[#5C2A33]/50 mt-3">Только для Мади • Версия 1.0</div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        function loginAdmin(btn) {
+            btn.closest('.fixed').remove();
+            const adminModal = document.createElement('div'); adminModal.className = 'fixed inset-0 bg-black/70 flex items-end z-[300]';
+            adminModal.innerHTML = `
+                <div class="bg-white w-full max-w-[420px] mx-auto rounded-t-3xl p-6" style="height: 72%;">
+                    <div class="flex justify-between mb-5"><div class="text-xl font-semibold">Панель Мади ✨</div><div onclick="this.closest('.fixed').remove()" class="text-3xl leading-none cursor-pointer">×</div></div>
+                    <div class="section-card p-5 mb-4"><div class="text-sm font-semibold mb-3">Статистика учениц</div><div class="grid grid-cols-3 gap-4 text-center"><div><div class="text-3xl font-semibold text-[#E07686]">87</div><div class="text-xs text-[#5C2A33]/60">активных</div></div><div><div class="text-3xl font-semibold text-[#C9A55C]">14</div><div class="text-xs text-[#5C2A33]/60">онлайн сейчас</div></div><div><div class="text-3xl font-semibold text-[#84C474]">312</div><div class="text-xs text-[#5C2A33]/60">уроков пройдено</div></div></div></div>
+                    <div class="text-xs text-[#5C2A33]/70">Здесь Мади может редактировать уроки, смотреть прогресс учениц и отправлять персональные сообщения. (Полная версия)</div>
+                </div>
+            `;
+            document.body.appendChild(adminModal);
+        }
+        
+        function shareProgress() {
+            const modal = document.createElement('div'); modal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-[300]';
+            modal.innerHTML = `<div class="bg-white w-[88%] max-w-[340px] rounded-3xl overflow-hidden"><div class="p-5 text-center" style="background: linear-gradient(#FBE8EA, white);"><div class="mx-auto w-14 h-14 bg-white rounded-full flex items-center justify-center text-3xl mb-3 shadow">🌸</div><div class="font-semibold">Мадинa</div><div class="text-[#E07686]">24 дня подряд • 87 слов</div></div><div class="p-5 text-center"><div class="text-sm">Поделись прогрессом в Instagram Stories ✨</div><button onclick="this.closest('.fixed').remove(); showShareSuccess()" class="mt-4 w-full py-3 bg-[#5C2A33] text-white rounded-2xl">Поделиться в сторис</button></div></div>`;
+            document.body.appendChild(modal);
+        }
+        
+        function showShareSuccess() {
+            const t = document.createElement('div'); t.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#84C474] text-white px-6 py-3 rounded-3xl text-sm z-[400]'; t.innerHTML = `Готово! Твои друзья увидят твой прогресс 💗`; document.body.appendChild(t); setTimeout(() => t.remove(), 2100);
+        }
+        
+        function startAppFromIntro() {
+            const splash = document.getElementById('intro-splash');
+            splash.style.transition = 'opacity 0.5s ease';
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.remove();
+                switchScreen('home');
+            }, 500);
+        }
+        
+        function initializeApp() {
+            initTailwind();
+            
+            // Auto-hide intro splash after 4.5 seconds if not tapped
+            setTimeout(() => {
+                const splash = document.getElementById('intro-splash');
+                if (splash && splash.parentNode) {
+                    splash.style.transition = 'opacity 0.6s ease';
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.remove(), 600);
+                }
+            }, 4500);
+            
+            document.getElementById('screen-home').classList.remove('hidden');
+            document.getElementById('nav-home').classList.add('nav-active');
+            
+            // Sakura
+            setInterval(() => {
+                if (currentScreen === 'home' && Math.random() > 0.68) {
+                    const p = document.createElement('div'); p.className = 'sakura'; p.style.left = Math.random()*100+'%'; p.style.top = '-10px'; p.innerHTML = '🌸'; document.getElementById('screen-home').appendChild(p); setTimeout(() => p.remove(), 6200);
+                }
+            }, 1950);
+            
+            // Tweaks
+            document.getElementById('tweak-name-val').innerText = tweaks.userName;
+            document.getElementById('tweak-streak-val').innerText = tweaks.streak;
+            document.getElementById('tweak-xp-val').innerText = tweaks.xp;
+            setTimeout(() => { const p = document.getElementById('tweaks-panel'); if (p) p.style.display = 'block'; }, 3800);
+            
+            // Show login section by default
+            document.getElementById('profile-stats').classList.add('hidden');
+            
+            console.log('%c[Korean with Madie FINAL] Полная версия с 한글 Lab + Карточки внутри Игр загружена! 🌸', 'color:#E07686');
+        }
+        
+        window.onload = initializeApp;
+    </script>
+</body>
+</html>
